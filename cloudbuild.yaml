@@ -32,7 +32,7 @@ steps:
       - 'compute'
       - 'instances'
       - 'list'
-      - '--filter="name:(instance-name)"'
+      - '--filter="name:(instance-20241213-092221)"'
 
   - name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
