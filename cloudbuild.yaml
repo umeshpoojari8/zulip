@@ -1,0 +1,45 @@
+steps:
+  - name: 'hashicorp/terraform:light'
+    entrypoint: '/bin/sh'
+    args:
+      - '-c'
+      - |
+        # Install necessary dependencies
+        apt-get update && apt-get install -y curl software-properties-common
+        curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list
+        apt-get update && apt-get install -y vagrant
+
+  - name: 'gcr.io/cloud-builders/git'
+    args: ['clone', '.']
+
+  - name: 'hashicorp/terraform:light'
+    entrypoint: '/bin/sh'
+    args:
+      - '-c'
+      - |
+        # Navigate to the directory with the Vagrantfile
+        cd .
+
+        # Initialize and provision the Vagrant environment
+        vagrant up --provider=gcp
+
+        # Check the status to ensure provisioning was successful
+        vagrant status
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'compute'
+      - 'instances'
+      - 'list'
+      - '--filter="name:(instance-name)"'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        # Optionally, deploy your application within the created VM
+        gcloud compute ssh instance-name --command='cd /path/to/application && ./run-application.sh'
+options:
+  logging: CLOUD_LOGGING_ONLY
