@@ -1,57 +1,38 @@
 steps:
-  # Step 1: Create a GCP VM instance
-  - name: "gcr.io/cloud-builders/gcloud"
-    args:
-      - "compute"
-      - "instances"
-      - "create"
-      - "zulip-vm"
-      - "--zone=us-central1-a"
-      - "--machine-type=e2-medium"
-      - "--image-family=ubuntu-2004-lts"
-      - "--image-project=ubuntu-os-cloud"
-      - "--boot-disk-size=50GB"
-
-  # Step 2: Install SSH key for accessing the VM
-  - name: "gcr.io/cloud-builders/gcloud"
-    args:
-      - "compute"
-      - "config-ssh"
-
-  # Step 3: Update and install dependencies on the VM
+  # Step 1: Update the VM and install dependencies
   - name: "gcr.io/cloud-builders/ssh"
     args:
-      - "zulip-vm"
-      - "--zone=us-central1-a"
+      - "YOUR_VM_NAME"
+      - "--zone=YOUR_VM_ZONE"
       - "--command=apt-get update && apt-get upgrade -y && apt-get install -y wget gnupg software-properties-common locales"
 
-  # Step 4: Add Zulip repository and install Zulip
+  # Step 2: Add Zulip repository and install Zulip
   - name: "gcr.io/cloud-builders/ssh"
     args:
-      - "zulip-vm"
-      - "--zone=us-central1-a"
+      - "instance-20241213-092221"
+      - "--zone=YOUR_VM_ZONE"
       - "--command=wget https://zulip.com/instructions/setup-release-key.gpg && apt-key add setup-release-key.gpg && add-apt-repository \"deb https://download.zulip.com/apt stable main\" && apt-get update && apt-get install -y zulip"
 
-  # Step 5: Configure Zulip
+  # Step 3: Configure Zulip settings
   - name: "gcr.io/cloud-builders/ssh"
     args:
-      - "zulip-vm"
-      - "--zone=us-central1-a"
+      - "YOUR_VM_NAME"
+      - "--zone=YOUR_VM_ZONE"
       - "--command=sed -i 's/EXAMPLE/zulip.example.com/g' /etc/zulip/settings.py"
 
-  # Step 6: Initialize the Zulip database
+  # Step 4: Initialize the Zulip database
   - name: "gcr.io/cloud-builders/ssh"
     args:
-      - "zulip-vm"
-      - "--zone=us-central1-a"
+      - "YOUR_VM_NAME"
+      - "--zone=YOUR_VM_ZONE"
       - "--command=su zulip -c \"/home/zulip/deployments/current/scripts/setup/initialize-database\""
 
-  # Step 7: Start Zulip server
+  # Step 5: Start the Zulip server
   - name: "gcr.io/cloud-builders/ssh"
     args:
-      - "zulip-vm"
-      - "--zone=us-central1-a"
+      - "YOUR_VM_NAME"
+      - "--zone=YOUR_VM_ZONE"
       - "--command=systemctl enable zulip && systemctl start zulip"
 
 options:
-  machineType: "E2_SMALL"
+  machineType: e2-small
