@@ -1,33 +1,46 @@
 steps:
-  # Step 1: Update the VM and install dependencies
+  # Step 1: Create a new VM instance (this can be done outside Cloud Build, or via gcloud in a separate step)
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      - "compute"
+      - "instances"
+      - "create"
+      - "instance-20241213-092221"
+      - "--zone=YOUR_VM_ZONE"
+      - "--image-family=debian-11"
+      - "--image-project=debian-cloud"
+      - "--machine-type=e2-standard-2"  # Adjust to your desired machine type
+      - "--tags=http-server,https-server"
+
+  # Step 2: Update the VM and install dependencies
   - name: "gcr.io/cloud-builders/ssh"
     args:
       - "instance-20241213-092221"
       - "--zone=YOUR_VM_ZONE"
       - "--command=apt-get update && apt-get upgrade -y && apt-get install -y wget gnupg software-properties-common locales"
 
-  # Step 2: Add Zulip repository and install Zulip
+  # Step 3: Add Zulip repository and install Zulip
   - name: "gcr.io/cloud-builders/ssh"
     args:
       - "instance-20241213-092221"
       - "--zone=YOUR_VM_ZONE"
       - "--command=wget https://zulip.com/instructions/setup-release-key.gpg && apt-key add setup-release-key.gpg && add-apt-repository \"deb https://download.zulip.com/apt stable main\" && apt-get update && apt-get install -y zulip"
 
-  # Step 3: Configure Zulip settings
+  # Step 4: Configure Zulip settings
   - name: "gcr.io/cloud-builders/ssh"
     args:
       - "instance-20241213-092221"
       - "--zone=YOUR_VM_ZONE"
       - "--command=sed -i 's/EXAMPLE/zulip.example.com/g' /etc/zulip/settings.py"
 
-  # Step 4: Initialize the Zulip database
+  # Step 5: Initialize the Zulip database
   - name: "gcr.io/cloud-builders/ssh"
     args:
       - "instance-20241213-092221"
       - "--zone=YOUR_VM_ZONE"
       - "--command=su zulip -c \"/home/zulip/deployments/current/scripts/setup/initialize-database\""
 
-  # Step 5: Start the Zulip server
+  # Step 6: Start the Zulip server
   - name: "gcr.io/cloud-builders/ssh"
     args:
       - "instance-20241213-092221"
@@ -35,5 +48,4 @@ steps:
       - "--command=systemctl enable zulip && systemctl start zulip"
 
 options:
-  machineType: "E2_STANDARD_2"
-
+  machineType: "E2_STANDARD_2"  # Update to a valid machine type if needed
