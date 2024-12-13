@@ -35,4 +35,5 @@ steps:
       - "--command=systemctl enable zulip && systemctl start zulip"
 
 options:
-  machineType: e2-small
+  machineType: "E2_STANDARD_2"
+
