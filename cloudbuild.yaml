@@ -42,4 +42,4 @@ steps:
         # Optionally, deploy your application within the created VM
         gcloud compute ssh instance-name --command='cd /path/to/application && ./run-application.sh'
 options:
-  logging: gs://ggai-zulip
+  logging: CLOUD_LOGGING_AND_GCS
