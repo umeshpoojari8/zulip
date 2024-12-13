@@ -2,7 +2,7 @@ steps:
   # Step 1: Update the VM and install dependencies
   - name: "gcr.io/cloud-builders/ssh"
     args:
-      - "YOUR_VM_NAME"
+      - "instance-20241213-092221"
       - "--zone=YOUR_VM_ZONE"
       - "--command=apt-get update && apt-get upgrade -y && apt-get install -y wget gnupg software-properties-common locales"
 
@@ -16,21 +16,21 @@ steps:
   # Step 3: Configure Zulip settings
   - name: "gcr.io/cloud-builders/ssh"
     args:
-      - "YOUR_VM_NAME"
+      - "instance-20241213-092221"
       - "--zone=YOUR_VM_ZONE"
       - "--command=sed -i 's/EXAMPLE/zulip.example.com/g' /etc/zulip/settings.py"
 
   # Step 4: Initialize the Zulip database
   - name: "gcr.io/cloud-builders/ssh"
     args:
-      - "YOUR_VM_NAME"
+      - "instance-20241213-092221"
       - "--zone=YOUR_VM_ZONE"
       - "--command=su zulip -c \"/home/zulip/deployments/current/scripts/setup/initialize-database\""
 
   # Step 5: Start the Zulip server
   - name: "gcr.io/cloud-builders/ssh"
     args:
-      - "YOUR_VM_NAME"
+      - "instance-20241213-092221"
       - "--zone=YOUR_VM_ZONE"
       - "--command=systemctl enable zulip && systemctl start zulip"
 
