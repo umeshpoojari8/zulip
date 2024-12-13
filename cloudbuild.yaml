@@ -48,4 +48,4 @@ steps:
       - "--command=systemctl enable zulip && systemctl start zulip"
 
 options:
-  machineType: "E2_STANDARD_2"  # Update to a valid machine type if needed
+  machineType: "e2-medium"  # Update to a valid machine type if needed
