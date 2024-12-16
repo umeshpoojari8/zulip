@@ -43,7 +43,7 @@ WORKDIR /home/zulip/zulip
 
 ARG CUSTOM_CA_CERTIFICATES
 
-RUN chmod -R 777 /home/zulip
+# RUN chmod -R 777 /home/zulip
 
 # Finally, we provision the development environment and build a release tarball
 RUN SKIP_VENV_SHELL_WARNING=1 ./tools/provision --build-release-tarball-only
