@@ -23,6 +23,10 @@ FROM base AS build
 # Allow the zulip user to use sudo without a password
 RUN echo 'zulip ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+# Ensure zulip user has ownership of the necessary directories
+USER root
+RUN mkdir -p /home/zulip/zulip && chown -R zulip:zulip /home/zulip
+
 # Switch to the zulip user and set the working directory
 USER zulip
 WORKDIR /home/zulip
@@ -40,7 +44,7 @@ WORKDIR /home/zulip/zulip
 # # Optional: Checkout the specified branch/tag if .git exists
 # RUN if [ -d ".git" ]; then git checkout -b current "$ZULIP_GIT_REF"; fi
 
-# Build the Zulip release tarball using the provision and build-release-tarball tools
+# Provision and build the release tarball
 RUN SKIP_VENV_SHELL_WARNING=1 ./tools/provision --build-release-tarball-only && \
     . /srv/zulip-py3-venv/bin/activate && \
     ./tools/build-release-tarball docker && \
