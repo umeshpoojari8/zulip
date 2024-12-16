@@ -38,6 +38,9 @@ COPY ./ /home/zulip/zulip
 
 WORKDIR /home/zulip/zulip
 
+# Ensure the directory exists and has the right permissions
+RUN mkdir -p /home/zulip/var && chmod -R 777 /home/zulip
+
 ARG CUSTOM_CA_CERTIFICATES
 
 # Finally, we provision the development environment and build a release tarball
