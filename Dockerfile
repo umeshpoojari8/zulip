@@ -29,7 +29,7 @@ WORKDIR /home/zulip
 
 # Copy the local Zulip source code into the container
 # Assumes the zulip codebase is in a directory named "zulip" relative to the Dockerfile
-COPY ./zulip /home/zulip/zulip
+COPY ./ /home/zulip/zulip
 
 # Set the working directory to the Zulip codebase
 WORKDIR /home/zulip/zulip
