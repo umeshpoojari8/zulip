@@ -26,6 +26,7 @@ RUN echo 'zulip ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 # Ensure zulip user has ownership of the necessary directories
 USER root
 RUN mkdir -p /home/zulip/zulip/help-beta && \
+    chown -R zulip:zulip /home/zulip && \
     chown -R zulip:zulip /home/zulip/zulip/help-beta
 
 # Switch to the zulip user and set the working directory
