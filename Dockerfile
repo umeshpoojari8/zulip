@@ -25,7 +25,8 @@ RUN echo 'zulip ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Ensure zulip user has ownership of the necessary directories
 USER root
-RUN mkdir -p /home/zulip/zulip && chown -R zulip:zulip /home/zulip
+RUN mkdir -p /home/zulip/zulip/help-beta && \
+    chown -R zulip:zulip /home/zulip/zulip/help-beta
 
 # Switch to the zulip user and set the working directory
 USER zulip
@@ -47,7 +48,7 @@ WORKDIR /home/zulip/zulip
 # Provision and build the release tarball
 RUN SKIP_VENV_SHELL_WARNING=1 ./tools/provision --build-release-tarball-only && \
     . /srv/zulip-py3-venv/bin/activate && \
-    ./tools/build-release-tarball docker && \
+    ./tools/build-release-tarball docker --unsafe-perm && \
     mv /tmp/tmp.*/zulip-server-docker.tar.gz /tmp/zulip-server-docker.tar.gz
 
 # Stage 3: Production image setup
