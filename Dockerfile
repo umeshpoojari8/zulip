@@ -43,6 +43,7 @@ RUN . /srv/zulip-py3-venv/bin/activate && \
     ./tools/build-release-tarball docker && \
     ls -ltra /tmp/tmp.*/ && \
     mv /tmp/tmp.*/zulip-server-docker.tar.gz /tmp/zulip-server-docker.tar.gz && \
+    cp /tmp/zulip-server-docker.tar.gz /root/ && \
     ls -ltra /tmp/ && \
     pwd
 
@@ -55,7 +56,7 @@ ENV DATA_DIR="/data"
 # # Then, with a second image, we install the production release tarball.
 # COPY --from=build /tmp/zulip-server-docker.tar.gz /root/
 # COPY /tmp/zulip-server-docker.tar.gz /root/
-COPY /tmp/tmp.*/zulip-server-docker.tar.gz /root/
+#COPY /tmp/tmp.*/zulip-server-docker.tar.gz /root/
 COPY custom_zulip_files/ /root/custom_zulip
 
 ARG CUSTOM_CA_CERTIFICATES
