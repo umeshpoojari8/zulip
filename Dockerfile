@@ -1,5 +1,3 @@
-docker file 
-
 # This is a 2-stage Docker build.  In the first stage, we build a
 # Zulip development environment image and use
 # tools/build-release-tarball to generate a production release tarball
