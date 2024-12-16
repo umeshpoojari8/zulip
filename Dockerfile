@@ -34,7 +34,7 @@ WORKDIR /home/zulip
 #     git checkout -b current "$ZULIP_GIT_REF"
 
 # Copy the local Zulip source code into the container
-COPY ./zulip /home/zulip/zulip
+COPY ./ /home/zulip/zulip
 
 WORKDIR /home/zulip/zulip
 
