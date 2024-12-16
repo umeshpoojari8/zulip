@@ -41,22 +41,16 @@ ARG CUSTOM_CA_CERTIFICATES
 RUN SKIP_VENV_SHELL_WARNING=1 ./tools/provision --build-release-tarball-only
 RUN . /srv/zulip-py3-venv/bin/activate && \
     ./tools/build-release-tarball docker && \
-    ls -ltra /tmp/tmp.*/ && \
-    mv /tmp/tmp.*/zulip-server-docker.tar.gz /tmp/zulip-server-docker.tar.gz && \
-    cp /tmp/zulip-server-docker.tar.gz /root/ && \
-    ls -ltra /tmp/ && \
-    pwd
+    mv /tmp/tmp.*/zulip-server-docker.tar.gz /tmp/zulip-server-docker.tar.gz
 
 
 # In the second stage, we build the production image from the release tarball
-# FROM base
+FROM base
 
 ENV DATA_DIR="/data"
 
-# # Then, with a second image, we install the production release tarball.
-# COPY --from=build /tmp/zulip-server-docker.tar.gz /root/
-# COPY /tmp/zulip-server-docker.tar.gz /root/
-#COPY /tmp/tmp.*/zulip-server-docker.tar.gz /root/
+# Then, with a second image, we install the production release tarball.
+COPY --from=build /tmp/zulip-server-docker.tar.gz /root/
 COPY custom_zulip_files/ /root/custom_zulip
 
 ARG CUSTOM_CA_CERTIFICATES
