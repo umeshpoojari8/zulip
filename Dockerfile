@@ -27,7 +27,8 @@ RUN echo 'zulip ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER root
 RUN mkdir -p /home/zulip/zulip/help-beta && \
     chown -R zulip:zulip /home/zulip && \
-    chown -R zulip:zulip /home/zulip/zulip/help-beta
+    chown -R zulip:zulip /home/zulip/zulip/help-beta && \
+    chown -R zulip:zulip /home/zulip/zulip/var
 
 # Switch to the zulip user and set the working directory
 USER zulip
@@ -46,10 +47,10 @@ WORKDIR /home/zulip/zulip
 # # Optional: Checkout the specified branch/tag if .git exists
 # RUN if [ -d ".git" ]; then git checkout -b current "$ZULIP_GIT_REF"; fi
 
-# Provision and build the release tarball
+# Run provisioning and build the release tarball
 RUN SKIP_VENV_SHELL_WARNING=1 ./tools/provision --build-release-tarball-only && \
     . /srv/zulip-py3-venv/bin/activate && \
-    ./tools/build-release-tarball docker --unsafe-perm && \
+    ./tools/build-release-tarball docker && \
     mv /tmp/tmp.*/zulip-server-docker.tar.gz /tmp/zulip-server-docker.tar.gz
 
 # Stage 3: Production image setup
