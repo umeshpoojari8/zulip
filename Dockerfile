@@ -34,11 +34,11 @@ COPY ./ /home/zulip/zulip
 # Set the working directory to the Zulip codebase
 WORKDIR /home/zulip/zulip
 
-# Argument for specifying a branch, tag, or commit of the Zulip codebase (optional)
-ARG ZULIP_GIT_REF=9.3
+# # Argument for specifying a branch, tag, or commit of the Zulip codebase (optional)
+# ARG ZULIP_GIT_REF=9.3
 
-# Optional: Checkout the specified branch/tag if .git exists
-RUN if [ -d ".git" ]; then git checkout -b current "$ZULIP_GIT_REF"; fi
+# # Optional: Checkout the specified branch/tag if .git exists
+# RUN if [ -d ".git" ]; then git checkout -b current "$ZULIP_GIT_REF"; fi
 
 # Build the Zulip release tarball using the provision and build-release-tarball tools
 RUN SKIP_VENV_SHELL_WARNING=1 ./tools/provision --build-release-tarball-only && \
