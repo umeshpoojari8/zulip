@@ -23,12 +23,7 @@ FROM base AS build
 # Allow the zulip user to use sudo without a password
 RUN echo 'zulip ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# Ensure zulip user has ownership of the necessary directories
-USER root
-RUN mkdir -p /home/zulip/zulip/help-beta && \
-    chown -R zulip:zulip /home/zulip && \
-    chown -R zulip:zulip /home/zulip/zulip/help-beta && \
-    chown -R zulip:zulip /home/zulip/zulip/var
+
 
 # Switch to the zulip user and set the working directory
 USER zulip
@@ -36,10 +31,17 @@ WORKDIR /home/zulip
 
 # Copy the local Zulip source code into the container
 # Assumes the zulip codebase is in a directory named "zulip" relative to the Dockerfile
-COPY ./ /home/zulip/zulip
+COPY ./ /home/zulip/
+
+# Ensure zulip user has ownership of the necessary directories
+USER root
+RUN mkdir -p /home/zulip/zulip/help-beta && \
+    chown -R zulip:zulip /home/zulip && \
+    chown -R zulip:zulip /home/zulip/zulip/help-beta && \
+    chown -R zulip:zulip /home/zulip/zulip/var
 
 # Set the working directory to the Zulip codebase
-WORKDIR /home/zulip/zulip
+WORKDIR /home/zulip/
 
 # # Argument for specifying a branch, tag, or commit of the Zulip codebase (optional)
 # ARG ZULIP_GIT_REF=9.3
