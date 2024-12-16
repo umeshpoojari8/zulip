@@ -22,35 +22,35 @@ steps:
       - push
       - 'gcr.io/$PROJECT_ID/${_IMAGE_NAME}:$COMMIT_SHA'
 
-  # Step 4: Authenticate kubectl with GKE cluster
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args:
-      - 'container'
-      - 'clusters'
-      - 'get-credentials'
-      - '${_GKE_CLUSTER}'
-      - '--zone=${_GKE_ZONE}'
-      - '--project=$PROJECT_ID'
+  # # Step 4: Authenticate kubectl with GKE cluster
+  # - name: 'gcr.io/cloud-builders/gcloud'
+  #   args:
+  #     - 'container'
+  #     - 'clusters'
+  #     - 'get-credentials'
+  #     - '${_GKE_CLUSTER}'
+  #     - '--zone=${_GKE_ZONE}'
+  #     - '--project=$PROJECT_ID'
 
-  # Step 5: Deploy the new Docker image to GKE
-  - name: 'gcr.io/cloud-builders/kubectl'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=${_GKE_ZONE}'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
-    args:
-      - 'apply'
-      - '-f'
-      - 'kubernetes/test'
-      # - '--validate=false'
+  # # Step 5: Deploy the new Docker image to GKE
+  # - name: 'gcr.io/cloud-builders/kubectl'
+  #   env:
+  #     - 'CLOUDSDK_COMPUTE_ZONE=${_GKE_ZONE}'
+  #     - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
+  #   args:
+  #     - 'apply'
+  #     - '-f'
+  #     - 'kubernetes/test'
+  #     # - '--validate=false'
 
-  # Step 6: Verify nodes in the GKE cluster
-  - name: 'gcr.io/cloud-builders/kubectl'
-    env:
-      - 'CLOUDSDK_COMPUTE_ZONE=${_GKE_ZONE}'
-      - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
-    args:
-      - 'get'
-      - 'nodes'
+  # # Step 6: Verify nodes in the GKE cluster
+  # - name: 'gcr.io/cloud-builders/kubectl'
+  #   env:
+  #     - 'CLOUDSDK_COMPUTE_ZONE=${_GKE_ZONE}'
+  #     - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
+  #   args:
+  #     - 'get'
+  #     - 'nodes'
 
 substitutions:
   _GKE_CLUSTER: 'dev'
