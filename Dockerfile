@@ -24,20 +24,20 @@ RUN echo 'zulip ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER zulip
 WORKDIR /home/zulip
 
-COPY ./ /home/zulip/zulip
+# COPY ./ /home/zulip/zulip
 
-# Ensure necessary directories exist and have proper permissions
-RUN mkdir -p /home/zulip/var && chown -R zulip:zulip /home/zulip
+# # Ensure necessary directories exist and have proper permissions
+# RUN mkdir -p /home/zulip/var && chown -R zulip:zulip /home/zulip
 
 
-# # You can specify these in docker-compose.yml or with
-# #   docker build --build-arg "ZULIP_GIT_REF=git_branch_name" .
-# ARG ZULIP_GIT_URL=https://github.com/zulip/zulip.git
-# ARG ZULIP_GIT_REF=9.3
+# You can specify these in docker-compose.yml or with
+#   docker build --build-arg "ZULIP_GIT_REF=git_branch_name" .
+ARG ZULIP_GIT_URL=https://github.com/zulip/zulip.git
+ARG ZULIP_GIT_REF=9.3
 
-# RUN git clone "$ZULIP_GIT_URL" && \
-#     cd zulip && \
-#     git checkout -b current "$ZULIP_GIT_REF"
+RUN git clone "$ZULIP_GIT_URL" && \
+    cd zulip && \
+    git checkout -b current "$ZULIP_GIT_REF"
 
 WORKDIR /home/zulip/zulip
 
