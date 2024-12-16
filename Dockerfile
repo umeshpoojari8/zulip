@@ -24,22 +24,16 @@ RUN echo 'zulip ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER zulip
 WORKDIR /home/zulip
 
-# # You can specify these in docker-compose.yml or with
-# #   docker build --build-arg "ZULIP_GIT_REF=git_branch_name" .
-# ARG ZULIP_GIT_URL=https://github.com/zulip/zulip.git
-# ARG ZULIP_GIT_REF=9.3
+# You can specify these in docker-compose.yml or with
+#   docker build --build-arg "ZULIP_GIT_REF=git_branch_name" .
+ARG ZULIP_GIT_URL=https://github.com/umeshpoojari8/zulip
+ARG ZULIP_GIT_REF=9.3
 
-# RUN git clone "$ZULIP_GIT_URL" && \
-#     cd zulip && \
-#     git checkout -b current "$ZULIP_GIT_REF"
-
-# Copy the local Zulip source code into the container
-COPY ./ /home/zulip/zulip
+RUN git clone "$ZULIP_GIT_URL" && \
+    cd zulip && \
+    git checkout -b main "$ZULIP_GIT_REF"
 
 WORKDIR /home/zulip/zulip
-
-# Ensure the directory exists and has the right permissions
-RUN mkdir -p /home/zulip/var && chmod -R 777 /home/zulip
 
 ARG CUSTOM_CA_CERTIFICATES
 
