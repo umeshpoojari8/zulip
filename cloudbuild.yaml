@@ -1,28 +1,28 @@
 # # cloudbuild.yaml
-# steps:
-# # Step 1: Build the Docker image
-# - name: 'gcr.io/cloud-builders/docker'
-#   args:
-#     - 'build'
-#     - '-t'
-#     - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/nginx:${_COMMIT_SHA}'
-#     - '-t'
-#     - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/nginx:latest'
-#     - '.'
-#   id: 'Build Docker Image'
-
-# # Step 2: Push the Docker image with both tags to the GCP container registry
-# - name: 'gcr.io/cloud-builders/docker'
-#   args:
-#     - 'push'
-#     - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/nginx:${_COMMIT_SHA}'
-#   id: 'Push Docker Image with Commit SHA'
-
-# - name: 'gcr.io/cloud-builders/docker'
-#   args:
-#     - 'push'
-#     - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/nginx:latest'
-#   id: 'Push Docker Image with Latest Tag'
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:$COMMIT_SHA'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest'
+      - '.'
+    id: 'Build Docker Image'
+  
+  # Step 2: Push the Docker image with both tags to the GCP container registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:$COMMIT_SHA'
+    id: 'Push Docker Image with Commit SHA'
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest'
+    id: 'Push Docker Image with Latest Tag'
 
 # # Define substitutions for dynamic variables
 # substitutions:
@@ -32,29 +32,29 @@
 # timeout: "600s"
 
 
-steps:
+# steps:
 
-  # Step 1: Build the Docker image
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - build
-      - '-t'
-      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest'
-      - '-t'
-      - 'gcr.io/$PROJECT_ID/dev-zulip/dev:$COMMIT_SHA'
-      - '.'
+#   # Step 1: Build the Docker image
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args:
+#       - build
+#       - '-t'
+#       - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest'
+#       - '-t'
+#       - 'gcr.io/$PROJECT_ID/dev-zulip/dev:$COMMIT_SHA'
+#       - '.'
 
-  # Step 2: Push the `latest` tag to GCR
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - push
-      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest'
+#   # Step 2: Push the `latest` tag to GCR
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args:
+#       - push
+#       - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest'
 
-  # Step 3: Push the commit-specific tag to GCR
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - push
-      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:$COMMIT_SHA'
+#   # Step 3: Push the commit-specific tag to GCR
+#   - name: 'gcr.io/cloud-builders/docker'
+#     args:
+#       - push
+#       - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:$COMMIT_SHA'
 
   # # Step 4: Authenticate kubectl with GKE cluster
   # - name: 'gcr.io/cloud-builders/gcloud'
@@ -86,8 +86,8 @@ steps:
   #     - 'get'
   #     - 'nodes'
 
-images:
-  - 'gcr.io/$PROJECT_ID/dev'
+# images:
+#   - 'gcr.io/$PROJECT_ID/dev'
 
 substitutions:
   _GKE_CLUSTER: 'dev'
