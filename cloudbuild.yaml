@@ -5,7 +5,7 @@ steps:
   args:
     - 'build'
     - '-t'
-    - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip:${COMMIT_SHA}'
+    - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip:${_COMMIT_SHA}'
     - '-t'
     - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip:latest'
     - '.'
@@ -15,7 +15,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
     - 'push'
-    - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip:${COMMIT_SHA}'
+    - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip:${_COMMIT_SHA}'
   id: 'Push Docker Image with Commit SHA'
 
 - name: 'gcr.io/cloud-builders/docker'
@@ -26,8 +26,8 @@ steps:
 
 # Define substitutions for dynamic variables
 substitutions:
-  _COMMIT_SHA: "$(COMMIT_SHA)"
-
+  _COMMIT_SHA: "manual"
+  
 # Specify timeout for the entire build process (optional)
 timeout: "600s"
 
