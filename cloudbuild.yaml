@@ -66,4 +66,7 @@ logsBucket: gs://dev-zulip-cloudbuild-log
 # - roles/container.developer (for GKE access)
 # - roles/storage.admin (for GCR access)
 
+options:
+  machineType: "E2_HIGHCPU_32"
+
 
