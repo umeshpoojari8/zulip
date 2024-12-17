@@ -14,7 +14,7 @@
 ###########################################################
 
 # Use the official Ubuntu base image
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
