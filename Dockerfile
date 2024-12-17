@@ -50,7 +50,7 @@ RUN curl -fLO https://download.zulip.com/server/zulip-server-latest.tar.gz && \
 
 # Install Zulip server
 RUN yes | ./zulip-server-*/scripts/setup/install --certbot \
-    --email=umesh.poojari@gogateway.ai --hostname=gogateway.ai
+     --email=YOUR_EMAIL --hostname=YOUR_HOSTNAME
 
 # Expose ports for web traffic
 EXPOSE 80 443
