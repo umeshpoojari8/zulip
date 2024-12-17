@@ -56,7 +56,7 @@ steps:
       - 'nodes'
 
 images:
-  - 'gcr.io/$PROJECT_ID/dev'
+  - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev'
 
 substitutions:
   _GKE_CLUSTER: 'dev'
