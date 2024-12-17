@@ -21,8 +21,6 @@ steps:
     args:
       - push
       - 'gcr.io/$PROJECT_ID/${_IMAGE_NAME}:$COMMIT_SHA'
-  images:
-    - 'gcr.io/$PROJECT_ID/dev-zulip'
 
   # # Step 4: Authenticate kubectl with GKE cluster
   # - name: 'gcr.io/cloud-builders/gcloud'
@@ -53,6 +51,9 @@ steps:
   #   args:
   #     - 'get'
   #     - 'nodes'
+
+images:
+  - 'gcr.io/$PROJECT_ID/dev-zulip'
 
 substitutions:
   _GKE_CLUSTER: 'dev'
