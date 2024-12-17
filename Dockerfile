@@ -36,6 +36,9 @@ FROM base AS build
 
 RUN echo 'zulip ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+# Copy custom nginx.conf file for routing
+COPY nginx.conf /etc/nginx/nginx.conf
+
 USER zulip
 WORKDIR /home/zulip
 
