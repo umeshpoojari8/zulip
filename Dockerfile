@@ -50,7 +50,7 @@ RUN curl -fLO https://download.zulip.com/server/zulip-server-latest.tar.gz && \
 
 # Install Zulip server
 RUN yes | ./zulip-server-*/scripts/setup/install --certbot \
-     --email=YOUR_EMAIL --hostname=YOUR_HOSTNAME
+     --email=umesh.poojari8@gmail.com --hostname=gmail.com
 
 # Expose ports for web traffic
 EXPOSE 80 443
