@@ -21,9 +21,11 @@ spec:
         - containerPort: 9991
         resources:
           requests:
-            limits:
-              cpu: 100m
-              memory: 3584Mi
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1"
 
 ---
 apiVersion: v1
