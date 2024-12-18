@@ -16,7 +16,7 @@ spec:
       containers:
         - name: zulip
           image: us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest
-          command: ["sh", "-c", "while true; do sleep 30; done"]
+          # command: ["sh", "-c", "while true; do sleep 30; done"]
           resources:
             limits:
               cpu: 100m
