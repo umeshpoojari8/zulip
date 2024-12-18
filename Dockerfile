@@ -163,8 +163,8 @@ RUN chmod +x /usr/local/bin/test-routing.sh
 # Expose the ports for testing (optional, if needed externally)
 EXPOSE 5432 5672 6379 11211
 
-# Run the test script on container startup
-CMD ["sh", "-c", "/usr/local/bin/test-routing.sh && nginx -g 'daemon off;'"]
+# # Run the test script on container startup
+# CMD ["sh", "-c", "/usr/local/bin/test-routing.sh && nginx -g 'daemon off;'"]
 
 VOLUME ["$DATA_DIR"]
 EXPOSE 80 443
