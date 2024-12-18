@@ -43,7 +43,7 @@ steps:
     args:
       - 'apply'
       - '-f'
-      - 'kubernetes/test/zulip-deployment.yaml'
+      - 'kubernetes/main'
       # - '--validate=false'
 
   # Step 6: Verify nodes in the GKE cluster
