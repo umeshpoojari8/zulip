@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: zulip
-        image: your-docker-repo/zulip-dev:latest
+        image: us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest
         ports:
         - containerPort: 9991
         resources:
