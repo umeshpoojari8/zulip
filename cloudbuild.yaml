@@ -70,6 +70,6 @@ logsBucket: gs://dev-zulip-cloudbuild-log
 # - roles/storage.admin (for GCR access)
 
 options:
-  machineType: "E2_HIGHCPU_32"
+  machineType: "E2_STANDARD_2"
 
 
