@@ -55,8 +55,8 @@ steps:
       - 'get'
       - 'nodes'
 
-images:
-  - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev'
+# images:
+#   - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev'
 
 substitutions:
   _GKE_CLUSTER: 'dev'
