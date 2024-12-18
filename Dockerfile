@@ -169,8 +169,8 @@ EXPOSE 5432 5672 6379 11211
 VOLUME ["$DATA_DIR"]
 EXPOSE 80 443
 
-# ENTRYPOINT ["/sbin/entrypoint.sh"]
-# CMD ["app:run"]
+ENTRYPOINT ["/sbin/entrypoint.sh"]
+CMD ["app:run"]
 
 
 
