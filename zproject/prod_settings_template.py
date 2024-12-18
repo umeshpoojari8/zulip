@@ -614,7 +614,7 @@ SOCIAL_AUTH_SAML_SUPPORT_CONTACT = {
 ## To use a different RabbitMQ "virtual host", adjust this.
 # RABBITMQ_VHOST = "/"
 ## To use another RabbitMQ user than the default "zulip", set RABBITMQ_USERNAME here.
-# RABBITMQ_USERNAME = "zulip"
+ RABBITMQ_USERNAME = "zulip"
 ## To access the RabbitMQ server over TLS, set this to True; this is
 ## generally only necessary if RabbitMQ is running on a separate,
 ## cloud-managed, host.
@@ -642,7 +642,7 @@ SOCIAL_AUTH_SAML_SUPPORT_CONTACT = {
  MEMCACHED_LOCATION =  34.118.232.44:11211
 ## To authenticate to memcached, set memcached_password in zulip-secrets.conf,
 ## and optionally change the default username "zulip@localhost" here.
-# MEMCACHED_USERNAME = "zulip@localhost"
+ MEMCACHED_USERNAME = "zulip@localhost"
 
 
 ################
