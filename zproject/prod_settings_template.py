@@ -610,7 +610,7 @@ REMOTE_POSTGRES_PORT = "5432"
 ## network; to use a remote RabbitMQ instance, set RABBITMQ_HOST, and
 ## optionally RABBITMQ_PORT, to the hostname and port here.
 RABBITMQ_HOST = "34.118.231.144"
-RABBITMQ_PORT = 5672
+RABBITMQ_PORT = "5672"
 ## To use a different RabbitMQ "virtual host", adjust this.
 # RABBITMQ_VHOST = "/"
 ## To use another RabbitMQ user than the default "zulip", set RABBITMQ_USERNAME here.
@@ -628,7 +628,7 @@ RABBITMQ_USERNAME = "zulip"
 ## to use a remote Redis instance, set REDIS_HOST here.
 REDIS_HOST = "34.118.233.38"
 ## For a different Redis port set the REDIS_PORT here.
-REDIS_PORT = 6379
+REDIS_PORT = "6379"
 ## If you set redis_password in zulip-secrets.conf, Zulip will use that password
 ## to connect to the Redis server.
 
@@ -639,7 +639,7 @@ REDIS_PORT = 6379
 ## but Zulip also supports connecting to memcached over the network;
 ## to use a remote Memcached instance, set MEMCACHED_LOCATION here.
 ## Format HOST:PORT
-MEMCACHED_LOCATION =  34.118.232.44:11211
+MEMCACHED_LOCATION =  "34.118.232.44:11211"
 ## To authenticate to memcached, set memcached_password in zulip-secrets.conf,
 ## and optionally change the default username "zulip@localhost" here.
 MEMCACHED_USERNAME = "zulip@localhost"
