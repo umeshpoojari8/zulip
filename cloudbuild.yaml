@@ -1,67 +1,67 @@
 # # cloudbuild.yaml
 steps:
-  # Step 1: Build the Docker image
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'build'
-      - '-t'
-      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:$COMMIT_SHA'
-      - '-t'
-      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:withnginx'
-      - '.'
-    id: 'Build Docker Image'
+  # # Step 1: Build the Docker image
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args:
+  #     - 'build'
+  #     - '-t'
+  #     - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:$COMMIT_SHA'
+  #     - '-t'
+  #     - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:withnginx'
+  #     - '.'
+  #   id: 'Build Docker Image'
   
-  # Step 2: Push the Docker image with both tags to the GCP container registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'push'
-      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:$COMMIT_SHA'
-    id: 'Push Docker Image with Commit SHA'
+  # # Step 2: Push the Docker image with both tags to the GCP container registry
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args:
+  #     - 'push'
+  #     - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:$COMMIT_SHA'
+  #   id: 'Push Docker Image with Commit SHA'
   
-  - name: 'gcr.io/cloud-builders/docker'
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args:
+  #     - 'push'
+  #     - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest'
+  #   id: 'Push Docker Image with Latest Tag'
+
+
+  # Step 4: Authenticate kubectl with GKE cluster
+  - name: 'gcr.io/cloud-builders/gcloud'
     args:
-      - 'push'
-      - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest'
-    id: 'Push Docker Image with Latest Tag'
+      - 'container'
+      - 'clusters'
+      - 'get-credentials'
+      - '${_GKE_CLUSTER}'
+      - '--zone=${_GKE_ZONE}'
+      - '--project=$PROJECT_ID'
 
+  # Step 5: Deploy the new Docker image to GKE
+  - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=${_GKE_ZONE}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
+    args:
+      - 'apply'
+      - '-f'
+      - 'kubernetes/test'
+      # - '--validate=false'
 
-#   # Step 4: Authenticate kubectl with GKE cluster
-#   - name: 'gcr.io/cloud-builders/gcloud'
-#     args:
-#       - 'container'
-#       - 'clusters'
-#       - 'get-credentials'
-#       - '${_GKE_CLUSTER}'
-#       - '--zone=${_GKE_ZONE}'
-#       - '--project=$PROJECT_ID'
+  # Step 6: Verify nodes in the GKE cluster
+  - name: 'gcr.io/cloud-builders/kubectl'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=${_GKE_ZONE}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
+    args:
+      - 'get'
+      - 'nodes'
 
-#   # Step 5: Deploy the new Docker image to GKE
-#   - name: 'gcr.io/cloud-builders/kubectl'
-#     env:
-#       - 'CLOUDSDK_COMPUTE_ZONE=${_GKE_ZONE}'
-#       - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
-#     args:
-#       - 'apply'
-#       - '-f'
-#       - 'kubernetes/test'
-#       # - '--validate=false'
+# images:
+#   - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev'
 
-#   # Step 6: Verify nodes in the GKE cluster
-#   - name: 'gcr.io/cloud-builders/kubectl'
-#     env:
-#       - 'CLOUDSDK_COMPUTE_ZONE=${_GKE_ZONE}'
-#       - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
-#     args:
-#       - 'get'
-#       - 'nodes'
-
-# # images:
-# #   - 'us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev'
-
-# substitutions:
-#   _GKE_CLUSTER: 'dev'
-#   _GKE_ZONE: 'us-central1'
-#   _IMAGE_NAME: 'dev-zulip'
+substitutions:
+  _GKE_CLUSTER: 'dev'
+  _GKE_ZONE: 'us-central1'
+  _IMAGE_NAME: 'dev-zulip'
 
 logsBucket: gs://dev-zulip-cloudbuild-log
 # timeout: '1200s'
