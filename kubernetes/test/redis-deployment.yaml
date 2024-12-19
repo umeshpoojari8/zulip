@@ -24,7 +24,7 @@ spec:
               exec redis-server /etc/redis.conf
           env:
             - name: REDIS_PASSWORD
-              value: "REPLACE_WITH_SECURE_REDIS_PASSWORD"
+              value: "password"
           resources:
             limits:
               cpu: 50m
