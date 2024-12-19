@@ -20,7 +20,7 @@ spec:
             - name: RABBITMQ_DEFAULT_USER
               value: "zulip"
             - name: RABBITMQ_DEFAULT_PASS
-              value: "rab@pass123"
+              value: "password"
           resources:
             limits:
               cpu: 75m
