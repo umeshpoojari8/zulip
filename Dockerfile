@@ -203,6 +203,11 @@ COPY nginx.conf /etc/nginx/nginx.conf
 USER zulip
 WORKDIR /home/zulip
 
+ENV SECRETS_postgres_password=mysecurepassword
+ENV SECRETS_memcached_password=mem@pass123
+ENV SECRETS_rabbitmq_password=password
+ENV SECRETS_redis_password=password
+
 # You can specify these in docker-compose.yml or with
 #   docker build --build-arg "ZULIP_GIT_REF=git_branch_name" .
 ARG ZULIP_GIT_URL=https://github.com/zulip/zulip.git
