@@ -23,13 +23,13 @@ spec:
               memory: 3584Mi
           env:
             - name: DB_HOST
-              value: "34.118.237.23"
+              value: "postgresql-service"
             - name: MEMCACHED_HOST
-              value: "34.118.232.44"
+              value: "memcached-service"
             - name: REDIS_HOST
-              value: "34.118.233.38"
+              value: "redis-service"
             - name: RABBITMQ_HOST
-              value: "34.118.231.144"
+              value: "rabbitmq-service"
             - name: ZULIP_AUTH_BACKENDS
               value: "EmailAuthBackend"
             - name: SECRETS_email_password
