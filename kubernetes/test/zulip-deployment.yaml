@@ -49,13 +49,13 @@ spec:
             - name: ZULIP_USER_PASS
               value: "123456789"
             - name: SECRETS_secret_key
-              value: "post@pass123"
+              value: "password"
             - name: SECRETS_postgres_password
-              value: "post@pass123"
+              value: "password"
             - name: SECRETS_memcached_password
-              value: "mem@pass123"
+              value: "password"
             - name: SECRETS_rabbitmq_password
-              value: "rab@pass123"
+              value: "password"
             - name: SECRETS_redis_password
               value: "REPLACE_WITH_SECURE_REDIS_PASSWORD"
             - name: SSL_CERTIFICATE_GENERATION
