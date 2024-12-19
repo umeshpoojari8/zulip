@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: zulip
-          image: us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:9bbd2902f767b451f16a4888da77d4c79904d3a2
+          image: us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:b3516c659f83964f65f680df1ffa2555df76aa9f
           # command: ["sh", "-c", "while true; do sleep 30; done"]
           resources:
             limits:
