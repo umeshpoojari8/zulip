@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: zulip
-          image: us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:79e9d472834db2be928bcc4ef9b9392ccef37904
+          image:  us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:withnginx
           # command: ["sh", "-c", "while true; do sleep 30; done"]
           resources:
             limits:
