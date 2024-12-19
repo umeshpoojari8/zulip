@@ -57,7 +57,7 @@ spec:
             - name: SECRETS_rabbitmq_password
               value: "password"
             - name: SECRETS_redis_password
-              value: "REPLACE_WITH_SECURE_REDIS_PASSWORD"
+              value: "password"
             - name: SSL_CERTIFICATE_GENERATION
               value: "self-signed"
           ports:
