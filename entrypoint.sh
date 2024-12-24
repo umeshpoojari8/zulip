@@ -7,24 +7,24 @@ fi
 set -e
 shopt -s extglob
 
-# DB aka Database
-DB_HOST="${DB_HOST:-34.118.237.23}"
-DB_HOST_PORT="${DB_HOST_PORT:-5432}"
-DB_NAME="${DB_NAME:-zulip}"
-DB_USER="${DB_USER:-zulip}"
-REMOTE_POSTGRES_SSLMODE="${REMOTE_POSTGRES_SSLMODE:-prefer}"
-# RabbitMQ
-SETTING_RABBITMQ_HOST="${SETTING_RABBITMQ_HOST:-34.118.231.144}"
-SETTING_RABBITMQ_USER="${SETTING_RABBITMQ_USER:-zulip}"
-export RABBITMQ_NODE="$SETTING_RABBITMQ_HOST"
-# Redis
-SETTING_RATE_LIMITING="${SETTING_RATE_LIMITING:-True}"
-SETTING_REDIS_HOST="${SETTING_REDIS_HOST:-34.118.233.38}"
-SETTING_REDIS_PORT="${SETTING_REDIS_PORT:-6379}"
-# Memcached
-if [ -z "$SETTING_MEMCACHED_LOCATION" ]; then
-    SETTING_MEMCACHED_LOCATION="34.118.232.44:11211"
-fi
+# # DB aka Database
+# DB_HOST="${DB_HOST:-34.118.237.23}"
+# DB_HOST_PORT="${DB_HOST_PORT:-5432}"
+# DB_NAME="${DB_NAME:-zulip}"
+# DB_USER="${DB_USER:-zulip}"
+# REMOTE_POSTGRES_SSLMODE="${REMOTE_POSTGRES_SSLMODE:-prefer}"
+# # RabbitMQ
+# SETTING_RABBITMQ_HOST="${SETTING_RABBITMQ_HOST:-34.118.231.144}"
+# SETTING_RABBITMQ_USER="${SETTING_RABBITMQ_USER:-zulip}"
+# export RABBITMQ_NODE="$SETTING_RABBITMQ_HOST"
+# # Redis
+# SETTING_RATE_LIMITING="${SETTING_RATE_LIMITING:-True}"
+# SETTING_REDIS_HOST="${SETTING_REDIS_HOST:-34.118.233.38}"
+# SETTING_REDIS_PORT="${SETTING_REDIS_PORT:-6379}"
+# # Memcached
+# if [ -z "$SETTING_MEMCACHED_LOCATION" ]; then
+#     SETTING_MEMCACHED_LOCATION="34.118.232.44:11211"
+# fi
 # Nginx settings
 DISABLE_HTTPS="${DISABLE_HTTPS:-false}"
 NGINX_WORKERS="${NGINX_WORKERS:-2}"
@@ -229,14 +229,14 @@ secretsConfiguration() {
     done
     echo "Zulip secrets configuration succeeded."
 }
-databaseConfiguration() {
-    echo "Setting database configuration ..."
-    setConfigurationValue "REMOTE_POSTGRES_HOST" "$DB_HOST" "$SETTINGS_PY" "string"
-    setConfigurationValue "REMOTE_POSTGRES_PORT" "$DB_HOST_PORT" "$SETTINGS_PY" "string"
-    setConfigurationValue "REMOTE_POSTGRES_SSLMODE" "$REMOTE_POSTGRES_SSLMODE" "$SETTINGS_PY" "string"
-    # The password will be set in secretsConfiguration
-    echo "Database configuration succeeded."
-}
+# databaseConfiguration() {
+#     echo "Setting database configuration ..."
+#     setConfigurationValue "REMOTE_POSTGRES_HOST" "$DB_HOST" "$SETTINGS_PY" "string"
+#     setConfigurationValue "REMOTE_POSTGRES_PORT" "$DB_HOST_PORT" "$SETTINGS_PY" "string"
+#     setConfigurationValue "REMOTE_POSTGRES_SSLMODE" "$REMOTE_POSTGRES_SSLMODE" "$SETTINGS_PY" "string"
+#     # The password will be set in secretsConfiguration
+#     echo "Database configuration succeeded."
+# }
 authenticationBackends() {
     echo "Activating authentication backends ..."
     local FIRST=true
@@ -334,19 +334,19 @@ initialConfiguration() {
     echo "=== End Initial Configuration Phase ==="
 }
 # === bootstrappingEnvironment ===
-waitingForDatabase() {
-    local TIMEOUT=60
-    echo "Waiting for database server to allow connections ..."
-    while ! PGPASSWORD="${SECRETS_postgres_password?}" /usr/bin/pg_isready -h "$DB_HOST" -p "$DB_HOST_PORT" -U "$DB_USER" -t 1 >/dev/null 2>&1
-    do
-        if ! ((TIMEOUT--)); then
-            echo "Could not connect to database server. Exiting."
-            exit 1
-        fi
-        echo -n "."
-        sleep 1
-    done
-}
+# waitingForDatabase() {
+#     local TIMEOUT=60
+#     echo "Waiting for database server to allow connections ..."
+#     while ! PGPASSWORD="${SECRETS_postgres_password?}" /usr/bin/pg_isready -h "$DB_HOST" -p "$DB_HOST_PORT" -U "$DB_USER" -t 1 >/dev/null 2>&1
+#     do
+#         if ! ((TIMEOUT--)); then
+#             echo "Could not connect to database server. Exiting."
+#             exit 1
+#         fi
+#         echo -n "."
+#         sleep 1
+#     done
+# }
 zulipFirstStartInit() {
     echo "Executing Zulip first start init ..."
     if [ -e "$DATA_DIR/.initiated" ] && [ "$FORCE_FIRST_START_INIT" != "True" ] && [ "$FORCE_FIRST_START_INIT" != "true" ]; then
