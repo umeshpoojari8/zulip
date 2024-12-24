@@ -1,31 +1,31 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: psql-client
-  labels:
-    app: psql-client
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: psql-client
-  template:
-    metadata:
-      labels:
-        app: psql-client
-    spec:
-      containers:
-        - name: psql-client
-          image: postgres:latest  # Official PostgreSQL image includes the psql client
-          command: [ "sleep", "infinity" ]  # Keeps the container running for manual use
-          env:
-            - name: DB_HOST
-              value: "postgresql-service"
-            - name: DB_PORT
-              value: "5432"
-            - name: DB_USER
-              value: "zulip"
-            - name: DB_NAME
-              value: "zulip"
-            - name: PGPASSWORD
-              value: "password"
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: psql-client
+#   labels:
+#     app: psql-client
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: psql-client
+#   template:
+#     metadata:
+#       labels:
+#         app: psql-client
+#     spec:
+#       containers:
+#         - name: psql-client
+#           image: postgres:latest  # Official PostgreSQL image includes the psql client
+#           command: [ "sleep", "infinity" ]  # Keeps the container running for manual use
+#           env:
+#             - name: DB_HOST
+#               value: "postgresql-service"
+#             - name: DB_PORT
+#               value: "5432"
+#             - name: DB_USER
+#               value: "zulip"
+#             - name: DB_NAME
+#               value: "zulip"
+#             - name: PGPASSWORD
+#               value: "password"
