@@ -1,26 +1,27 @@
 #!/bin/bash
 
 # Set the environment variables
-export DB_HOST="your_postgres_host"
+export DB_HOST="10.85.0.22"
 export DB_HOST_PORT="5432"
 export REMOTE_POSTGRES_SSLMODE="require"
-export SECRETS_postgres_password="your_postgres_password"
+export SECRETS_postgres_password="password"
 
-export REDIS_HOST="your_redis_host"
+export REDIS_HOST="34.58.192.255"
 export REDIS_PORT="6379"
-export SECRETS_redis_password="your_redis_password"
+export SECRETS_redis_password="password"
 
-export RABBITMQ_HOST="your_rabbitmq_host"
+export RABBITMQ_HOST="34.30.16.244"
 export RABBITMQ_PORT="5672"
-export SECRETS_rabbitmq_password="your_rabbitmq_password"
+export SECRETS_rabbitmq_password="password"
 
-export MEMCACHED_HOST="your_memcached_host"
+export MEMCACHED_HOST="35.192.145.111"
 export MEMCACHED_PORT="11211"
-export SECRETS_memcached_password="your_memcached_password"
+export SECRETS_memcached_password="password"
 
 # SMTP settings from transactional email provider (example: SendInBlue)
-export EMAIL_HOST="smtp-relay.sendinblue.com"
-export EMAIL_HOST_USER="username@example.com"
+export EMAIL_HOST="smtp.sendgrid.net"
+export EMAIL_HOST_USER="apikey"
+export EMAIL_PASSWORD="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"
 export EMAIL_USE_TLS="True"
 export EMAIL_PORT="587"
 
@@ -106,12 +107,13 @@ secretsConfiguration() {
 otherConfiguration() {
     echo "Setting other Zulip configuration ..."
     
-    # ALLOWED_HOSTS configuration (set to "*")
-    setConfigurationValue "ALLOWED_HOSTS" "*" "$SETTINGS_PY" "string"
+    # ALLOWED_HOSTS configuration
+    setConfigurationValue "ALLOWED_HOSTS" "[\"*\"]" "$SETTINGS_PY" "string"
 
-    # Email configuration (SMTP settings for SendInBlue)
+    # Email configuration (SMTP settings for SendGrid)
     setConfigurationValue "EMAIL_HOST" "$EMAIL_HOST" "$SETTINGS_PY" "string"
     setConfigurationValue "EMAIL_HOST_USER" "$EMAIL_HOST_USER" "$SETTINGS_PY" "string"
+    setConfigurationValue "EMAIL_PASSWORD" "$EMAIL_PASSWORD" "$SETTINGS_PY" "string"
     setConfigurationValue "EMAIL_USE_TLS" "$EMAIL_USE_TLS" "$SETTINGS_PY" "boolean"
     setConfigurationValue "EMAIL_PORT" "$EMAIL_PORT" "$SETTINGS_PY" "string"
 
