@@ -30,7 +30,7 @@ spec:
             - name: MEMCACHED_SASL_PWDB
               value: "/home/memcache/memcached-sasl-db"
             - name: MEMCACHED_PASSWORD
-              value: "mem@pass123"
+              value: "password"
           resources:
             limits:
               cpu: 75m
