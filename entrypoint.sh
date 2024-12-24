@@ -47,6 +47,10 @@ LINK_SETTINGS_TO_DATA="${LINK_SETTINGS_TO_DATA:-false}"
 # entrypoint.sh specific variable(s)
 SETTINGS_PY="/etc/zulip/settings.py"
 
+export POSTGRES_PASSWORD="password"
+export RABBITMQ_PASSWORD="password"
+export REDIS_PASSWORD="password"
+
 # BEGIN appRun functions
 # === initialConfiguration ===
 prepareDirectories() {
