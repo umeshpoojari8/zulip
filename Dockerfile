@@ -203,10 +203,10 @@ COPY nginx.conf /etc/nginx/nginx.conf
 USER zulip
 WORKDIR /home/zulip
 
-ENV SECRETS_postgres_password=mysecurepassword
-ENV SECRETS_memcached_password=mem@pass123
-ENV SECRETS_rabbitmq_password=password
-ENV SECRETS_redis_password=password
+# ENV SECRETS_postgres_password=mysecurepassword
+# ENV SECRETS_memcached_password=mem@pass123
+# ENV SECRETS_rabbitmq_password=password
+# ENV SECRETS_redis_password=password
 
 # You can specify these in docker-compose.yml or with
 #   docker build --build-arg "ZULIP_GIT_REF=git_branch_name" .
@@ -264,7 +264,7 @@ RUN chmod +x /sbin/entrypoint.sh
 VOLUME ["$DATA_DIR"]
 EXPOSE 80 443
 
-ENTRYPOINT ["/sbin/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "-c", "/sbin/update-config.sh && /sbin/entrypoint.sh"]
 CMD ["app:run"]
 
 
