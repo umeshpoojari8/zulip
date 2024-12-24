@@ -259,7 +259,9 @@ RUN \
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 COPY certbot-deploy-hook /sbin/certbot-deploy-hook
+COPY update-config.sh /sbin/update-config.sh
 RUN chmod +x /sbin/entrypoint.sh
+RUN chmod +x /sbin/update-config.sh
 
 VOLUME ["$DATA_DIR"]
 EXPOSE 80 443
