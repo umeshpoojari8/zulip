@@ -1,96 +1,96 @@
 
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: zulip-deployment
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: zulip
-#   template:
-#     metadata:
-#       labels:
-#         app: zulip
-#     spec:
-#       containers:
-#         - name: zulip
-#           image: us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest
-#           # command: ["sh", "-c", "while true; do sleep 30; done"]
-#           resources:
-#             limits:
-#               cpu: 100m
-#               memory: 3584Mi
-#           env:
-#             - name: DB_HOST
-#               value: "postgresql-service"
-#             - name: MEMCACHED_HOST
-#               value: "memcached-service"
-#             - name: REDIS_HOST
-#               value: "redis-service"
-#             - name: RABBITMQ_HOST
-#               value: "rabbitmq-service"
-#             - name: ZULIP_AUTH_BACKENDS
-#               value: "EmailAuthBackend"
-#             - name: SECRETS_email_password
-#               value: "123456789"
-#             - name: SETTING_EXTERNAL_HOST
-#               value: "localhost"
-#             - name: SETTING_ZULIP_ADMINISTRATOR
-#               value: "umesh.poojariaws@GMAIL.COM"
-#             - name: SETTING_EMAIL_HOST
-#               value: "umesh.poojariaws@GMAIL.COM"
-#             - name: SETTING_EMAIL_HOST_USER
-#               value: "umesh.poojariaws@GMAIL.COM"
-#             - name: ZULIP_USER_EMAIL
-#               value: "umesh.poojariaws@GMAIL.COM"
-#             - name: ZULIP_USER_DOMAIN
-#               value: "GMAIL.COM"
-#             - name: ZULIP_USER_PASS
-#               value: "123456789"
-#             - name: SECRETS_secret_key
-#               value: "password"
-#             - name: SECRETS_postgres_password
-#               value: "password"
-#             - name: SECRETS_memcached_password
-#               value: "password"
-#             - name: SECRETS_rabbitmq_password
-#               value: "password"
-#             - name: SECRETS_redis_password
-#               value: "password"
-#             - name: SSL_CERTIFICATE_GENERATION
-#               value: "self-signed"
-#           ports:
-#             - containerPort: 80
-#               name: http
-#               protocol: TCP
-#             - containerPort: 443
-#               name: https
-#               protocol: TCP
-#           volumeMounts:
-#             - name: zulip-persistent-storage
-#               mountPath: /data
-#       volumes:
-#         - name: zulip-persistent-storage
-#           persistentVolumeClaim:
-#             claimName: zulip-pvc
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: zulip-service
-# spec:
-#   selector:
-#     app: zulip
-#   ports:
-#     - protocol: TCP
-#       port: 80
-#       targetPort: 80
-#       name: http
-#     - protocol: TCP
-#       port: 443
-#       targetPort: 443
-#       name: https
-#   type: LoadBalancer
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zulip-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zulip
+  template:
+    metadata:
+      labels:
+        app: zulip
+    spec:
+      containers:
+        - name: zulip
+          image: us-central1-docker.pkg.dev/zulip-dev-444717/dev-zulip/dev:latest
+          # command: ["sh", "-c", "while true; do sleep 30; done"]
+          resources:
+            limits:
+              cpu: 100m
+              memory: 3584Mi
+          env:
+            - name: DB_HOST
+              value: "postgresql-service"
+            - name: MEMCACHED_HOST
+              value: "memcached-service"
+            - name: REDIS_HOST
+              value: "redis-service"
+            - name: RABBITMQ_HOST
+              value: "rabbitmq-service"
+            - name: ZULIP_AUTH_BACKENDS
+              value: "EmailAuthBackend"
+            - name: SECRETS_email_password
+              value: "123456789"
+            - name: SETTING_EXTERNAL_HOST
+              value: "localhost"
+            - name: SETTING_ZULIP_ADMINISTRATOR
+              value: "umesh.poojariaws@GMAIL.COM"
+            - name: SETTING_EMAIL_HOST
+              value: "umesh.poojariaws@GMAIL.COM"
+            - name: SETTING_EMAIL_HOST_USER
+              value: "umesh.poojariaws@GMAIL.COM"
+            - name: ZULIP_USER_EMAIL
+              value: "umesh.poojariaws@GMAIL.COM"
+            - name: ZULIP_USER_DOMAIN
+              value: "GMAIL.COM"
+            - name: ZULIP_USER_PASS
+              value: "123456789"
+            - name: SECRETS_secret_key
+              value: "password"
+            - name: SECRETS_postgres_password
+              value: "password"
+            - name: SECRETS_memcached_password
+              value: "password"
+            - name: SECRETS_rabbitmq_password
+              value: "password"
+            - name: SECRETS_redis_password
+              value: "password"
+            - name: SSL_CERTIFICATE_GENERATION
+              value: "self-signed"
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+            - containerPort: 443
+              name: https
+              protocol: TCP
+          volumeMounts:
+            - name: zulip-persistent-storage
+              mountPath: /data
+      volumes:
+        - name: zulip-persistent-storage
+          persistentVolumeClaim:
+            claimName: zulip-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zulip-service
+spec:
+  selector:
+    app: zulip
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      name: http
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+      name: https
+  type: LoadBalancer
 
     
