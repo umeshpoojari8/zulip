@@ -220,7 +220,7 @@ USE_I18N = True
 DEVELOPMENT_LOG_DIRECTORY = os.path.join(DEPLOY_ROOT, "var", "log")
 
 # Extend ALLOWED_HOSTS with localhost (needed to RPC to Tornado),
-ALLOWED_HOSTS += ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS += ["*"]#["127.0.0.1", "localhost"]
 # ... with hosts corresponding to EXTERNAL_HOST,
 ALLOWED_HOSTS += [EXTERNAL_HOST_WITHOUT_PORT, "." + EXTERNAL_HOST_WITHOUT_PORT]
 # ... and with the hosts in REALM_HOSTS.
