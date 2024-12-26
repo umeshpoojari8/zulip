@@ -27,7 +27,7 @@ spec:
               exec redis-server /etc/redis.conf
           env:
             - name: REDIS_PASSWORD
-              value: "REPLACE_WITH_SECURE_REDIS_PASSWORD"
+              value: "pssword"
           resources:
             limits:
               cpu: 50m
@@ -50,7 +50,7 @@ spec:
             - name: MEMCACHED_SASL_PWDB
               value: "/home/memcache/memcached-sasl-db"
             - name: MEMCACHED_PASSWORD
-              value: "REPLACE_WITH_SECURE_MEMCACHED_PASSWORD"
+              value: "password"
           resources:
             limits:
               cpu: 75m
@@ -65,7 +65,7 @@ spec:
             - name: RABBITMQ_DEFAULT_USER
               value: "zulip"
             - name: RABBITMQ_DEFAULT_PASS
-              value: "REPLACE_WITH_SECURE_RABBITMQ_PASSWORD"
+              value: "password"
           volumeMounts:
             - name: rabbitmq-persistent-storage
               mountPath: /var/lib/rabbitmq
@@ -81,7 +81,7 @@ spec:
             - name: POSTGRES_USER
               value: zulip
             - name: POSTGRES_PASSWORD
-              value: REPLACE_WITH_SECURE_POSTGRES_PASSWORD
+              value: password
           volumeMounts:
             - name: postgresql-persistent-storage
               mountPath: /var/lib/postgresql
@@ -109,13 +109,13 @@ spec:
             - name: SETTING_EXTERNAL_HOST
               value: "localhost"
             - name: SETTING_ZULIP_ADMINISTRATOR
-              value: "admin@example.com"
+              value: "umesh.poojari@gogateway.ai"
             - name: SETTING_EMAIL_HOST
               value: ""
             - name: SETTING_EMAIL_HOST_USER
               value: "noreply@example.com"
             - name: ZULIP_USER_EMAIL
-              value: "example@example.com"
+              value: "umesh.poojari@gogateway.ai"
             - name: ZULIP_USER_DOMAIN
               value: "example.com"
             - name: ZULIP_USER_PASS
@@ -124,13 +124,13 @@ spec:
               value: "REPLCAE_WITH_SECURE_SECRET_KEY"
             ## These should match the passwords configured above
             - name: SECRETS_postgres_password
-              value: "REPLACE_WITH_SECURE_POSTGRES_PASSWORD"
+              value: "password"
             - name: SECRETS_memcached_password
-              value: "REPLACE_WITH_SECURE_MEMCACHED_PASSWORD"
+              value: "password"
             - name: SECRETS_rabbitmq_password
-              value: "REPLACE_WITH_SECURE_RABBITMQ_PASSWORD"
+              value: "password"
             - name: SECRETS_redis_password
-              value: "REPLACE_WITH_SECURE_REDIS_PASSWORD"
+              value: "pssword"
             - name: SSL_CERTIFICATE_GENERATION
               value: "self-signed"
           ## Uncomment this when configuring the mobile push notifications service
