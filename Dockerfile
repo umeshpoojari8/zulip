@@ -203,10 +203,10 @@ COPY nginx.conf /etc/nginx/nginx.conf
 USER zulip
 WORKDIR /home/zulip
 
-ENV SECRETS_postgres_password=mysecurepassword
-ENV SECRETS_memcached_password=mem@pass123
-ENV SECRETS_rabbitmq_password=password
-ENV SECRETS_redis_password=password
+# ENV SECRETS_postgres_password=mysecurepassword
+# ENV SECRETS_memcached_password=mem@pass123
+# ENV SECRETS_rabbitmq_password=password
+# ENV SECRETS_redis_password=password
 
 # You can specify these in docker-compose.yml or with
 #   docker build --build-arg "ZULIP_GIT_REF=git_branch_name" .
@@ -250,15 +250,23 @@ RUN \
     mv zulip-server-docker zulip && \
     cp -rf /root/custom_zulip/* /root/zulip && \
     rm -rf /root/custom_zulip && \
-    /root/zulip/scripts/setup/install --hostname="$(hostname)" --email="docker-zulip" \
+    /root/zulip/scripts/setup/install --hostname=gogateway.ai --email="umesh.poojari@gogateway.ai" \
       --puppet-classes="zulip::profile::docker" --postgresql-version=14 && \
     rm -f /etc/zulip/zulip-secrets.conf /etc/zulip/settings.py && \
     apt-get -qq autoremove --purge -y && \
     apt-get -qq clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Create self-signed SSL certificates
+RUN mkdir -p /etc/ssl/private /etc/ssl/certs && \
+    openssl genrsa -out /etc/ssl/private/zulip.key 2048 && \
+    openssl req -new -x509 -key /etc/ssl/private/zulip.key -out /etc/ssl/certs/zulip.combined-chain.crt -days 365 \
+        -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=ggateway.ai" && \
+    chmod 600 /etc/ssl/private/zulip.key && \
+    chmod 644 /etc/ssl/certs/zulip.combined-chain.crt
+
 COPY entrypoint.sh /sbin/entrypoint.sh
-COPY certbot-deploy-hook /sbin/certbot-deploy-hook
+# COPY certbot-deploy-hook /sbin/certbot-deploy-hook
 RUN chmod +x /sbin/entrypoint.sh
 
 VOLUME ["$DATA_DIR"]
