@@ -23,19 +23,19 @@ spec:
               memory: 3584Mi
           env:
             - name: DB_HOST
-              value: "postgresql-service"
+              value: "34.118.237.23"
             - name: MEMCACHED_HOST
-              value: "memcached-service"
+              value: "34.118.232.44"
             - name: REDIS_HOST
-              value: "redis-service"
+              value: "34.118.233.38"
             - name: RABBITMQ_HOST
-              value: "rabbitmq-service"
+              value: "34.118.231.144"
             - name: ZULIP_AUTH_BACKENDS
               value: "EmailAuthBackend"
             - name: SECRETS_email_password
               value: "123456789"
             - name: SETTING_EXTERNAL_HOST
-              value: "localhost"
+              value: "34.29.141.82"
             - name: SETTING_ZULIP_ADMINISTRATOR
               value: "umesh.poojariaws@GMAIL.COM"
             - name: SETTING_EMAIL_HOST
